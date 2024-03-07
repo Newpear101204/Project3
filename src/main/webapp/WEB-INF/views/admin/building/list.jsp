@@ -335,7 +335,7 @@
             },
             error : function(response){
                 console.log("fail");
-                window.location.href = "/admin/building-edit?typeCode=require";
+                window.location.href = "/admin/building-list?message=error";
                 console.log(response);
             }
         });
@@ -366,10 +366,11 @@
             dataType : "JSON",
             success : function(response){
                 console.info("ok");
+                window.location.href = "/admin/building-list";
             },
             error : function(response){
                 console.log("fail");
-
+                window.location.href = "/admin/building-list?message=error";
                 console.log(response);
             }
         });

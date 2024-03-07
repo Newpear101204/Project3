@@ -309,10 +309,12 @@
             contentType : "application/json",
             dataType : "JSON",
             success : function(response){
+                window.location.href = "/admin/building-list";
                 console.log("OK");
             },
             error : function(response){
                 console.log("fail");
+                window.location.href = "/admin/building-list?message=error";
                 console.log(response);
             }
         });
