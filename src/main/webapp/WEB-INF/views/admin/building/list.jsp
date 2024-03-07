@@ -335,7 +335,7 @@
             },
             error : function(response){
                 console.log("fail");
-                window.location.href = "/admin/building-list?message=error";
+                window.location.href = "/admin/building-list";
                 console.log(response);
             }
         });
@@ -366,11 +366,11 @@
             dataType : "JSON",
             success : function(response){
                 console.info("ok");
-                window.location.href = "/admin/building-list";
+                window.location.href = "/admin/building-list?message=error";
             },
             error : function(response){
                 console.log("fail");
-                window.location.href = "/admin/building-list?message=error";
+                window.location.href = "/admin/building-list";
                 console.log(response);
             }
         });
@@ -417,9 +417,11 @@
             dataType : "JSON",
             success : function(respond){
                 console.log("OK");
+                window.location.href = "/admin/building-list?message=error";
             },
             error : function(respond){
                 console.log("fail");
+                window.location.href = "/admin/building-list";
                 console.log(respond);
             }
         });
