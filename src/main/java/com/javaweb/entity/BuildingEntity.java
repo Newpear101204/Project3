@@ -56,7 +56,7 @@ public class BuildingEntity {
     private String note ;
 
     @Column(name = "structure")
-    private Long structure;
+    private String structure;
 
     @Column(name = "motofee")
     private String motoFee;
@@ -226,11 +226,11 @@ public class BuildingEntity {
         this.note = note;
     }
 
-    public Long getStructure() {
+    public String getStructure() {
         return structure;
     }
 
-    public void setStructure(Long structure) {
+    public void setStructure(String structure) {
         this.structure = structure;
     }
 

@@ -97,24 +97,13 @@ import java.util.List;
         if(newBuilding.getId() != null){
           rentareaRepository.deleteAllByBuildings(newBuilding);
         }
-        List<Integer> listRentarea = new ArrayList<>();
-        String[] numberStrings = buildingDTO.getRentArea().split(",");
-        for (String numberString : numberStrings) {
-            int number = Integer.parseInt(numberString);
-            listRentarea.add(number);
-        }
+        List<Integer> listRentarea = buildingDTOConverter.RentareaStringToInteger(buildingDTO.getRentArea());
         for (Integer it : listRentarea){
             RentareaEntity x = new RentareaEntity();
             x.setBuilding(newBuilding);
             x.setValue(it);
             rentareaRepository.save(x);
         }
-        System.out.println("ok");
-
-
-
-
-
     }
 
     @Override

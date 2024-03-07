@@ -57,4 +57,15 @@ public class BuildingDTOConverter {
         return a;
 
     }
+
+    public List<Integer> RentareaStringToInteger(String s){
+        List<Integer> listRentarea = new ArrayList<>();
+        String[] numberStrings = s.split(",");
+        for (String numberString : numberStrings) {
+            int number = Integer.parseInt(numberString);
+            listRentarea.add(number);
+        }
+        return listRentarea;
+
+    }
 }
