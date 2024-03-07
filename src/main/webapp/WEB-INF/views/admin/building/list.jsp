@@ -417,11 +417,11 @@
             dataType : "JSON",
             success : function(respond){
                 console.log("OK");
-                window.location.href = "/admin/building-list?message=error";
+                window.location.href = "/admin/building-list";
             },
             error : function(respond){
                 console.log("fail");
-                window.location.href = "/admin/building-list";
+                window.location.href = "/admin/building-list?message=error";
                 console.log(respond);
             }
         });
