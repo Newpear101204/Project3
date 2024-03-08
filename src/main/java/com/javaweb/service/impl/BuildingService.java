@@ -80,7 +80,6 @@ import java.util.List;
             }
             liststaffDTO.add(x);
         }
-
         //
         ResponseDTO a = new ResponseDTO();
         a.setData(liststaffDTO);
@@ -92,7 +91,6 @@ import java.util.List;
     @Override
     public void addBuilding(BuildingDTO buildingDTO) {
         BuildingEntity newBuilding = buildingDTOConverter.buildingDTOConverter(buildingDTO);
-
         buildingRepository.save(newBuilding);
         if(newBuilding.getId() != null){
           rentareaRepository.deleteAllByBuildings(newBuilding);
@@ -114,7 +112,7 @@ import java.util.List;
 
     @Override
     public void DeleteBuilding(List<Long> ids) {
-        // xoa rentarea
+        // xoa rentarea, assignment
         for (Long it : ids){
             BuildingEntity a = buildingRepository.findById(it).get();
             rentareaRepository.deleteAllByBuildings(a);
@@ -128,7 +126,6 @@ import java.util.List;
     public void UpdateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
         BuildingEntity x = buildingRepository.findById(assignmentBuildingDTO.getBuildingId()).get();
         assignmentBuildingRepository.deleteAllByBuilding(x);
-
         List<Long> listStaffs = assignmentBuildingDTO.getStaffs();
         for (Long it : listStaffs){
            AssignmentBuildingEntity a = new AssignmentBuildingEntity();

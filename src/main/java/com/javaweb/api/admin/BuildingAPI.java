@@ -25,18 +25,13 @@ public class BuildingAPI {
 
     @PostMapping
     public void AddOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
-
-
         buildingService.addBuilding(buildingDTO);
 
     }
 
     @DeleteMapping("/{ids}")
     public void DeleteBuiling(@PathVariable List<Long> ids ){
-        // xuong DB xoa
         buildingService.DeleteBuilding(ids);
-
-
     }
 
     @GetMapping("/{id}/staffs")
@@ -48,8 +43,5 @@ public class BuildingAPI {
     @PostMapping("/assignment")
     public void updateAssignmentBuilding (@RequestBody AssignmentBuildingDTO assignmentBuildingDTO){
         buildingService.UpdateAssignmentBuilding(assignmentBuildingDTO);
-
-
-
     }
 }

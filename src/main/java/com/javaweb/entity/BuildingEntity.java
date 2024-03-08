@@ -70,6 +70,24 @@ public class BuildingEntity {
     @Column(name ="rentpricedescription")
     private String rentpricedescription;
 
+    @Column(name ="deposit")
+    private String deposit;
+
+    @Column(name ="payment")
+    private String payment;
+
+    @Column(name ="renttime")
+    private String rentTime;
+
+    @Column(name ="overtimefee")
+    private String overtimeFee;
+
+    @Column(name ="electricityfee")
+    private String electricityFee;
+
+    @Column(name ="decorationtime")
+    private String decorationTime;
+
 
     @OneToMany(mappedBy ="buildings", fetch = FetchType.LAZY)
     private List<RentareaEntity> listRentarea = new ArrayList();
@@ -256,5 +274,53 @@ public class BuildingEntity {
 
     public void setRentpricedescription(String rentpricedescription) {
         this.rentpricedescription = rentpricedescription;
+    }
+
+    public String getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(String deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getElectricityFee() {
+        return electricityFee;
+    }
+
+    public void setElectricityFee(String electricityFee) {
+        this.electricityFee = electricityFee;
+    }
+
+    public String getOvertimeFee() {
+        return overtimeFee;
+    }
+
+    public void setOvertimeFee(String overtimeFee) {
+        this.overtimeFee = overtimeFee;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public String getRentTime() {
+        return rentTime;
+    }
+
+    public void setRentTime(String rentTime) {
+        this.rentTime = rentTime;
+    }
+
+    public String getDecorationTime() {
+        return decorationTime;
+    }
+
+    public void setDecorationTime(String decorationTime) {
+        this.decorationTime = decorationTime;
     }
 }
