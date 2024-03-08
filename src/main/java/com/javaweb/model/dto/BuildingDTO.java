@@ -185,7 +185,7 @@ public class BuildingDTO extends AbstractDTO{
         return rentpricedescription;
     }
 
-    public void setentpricedescription(String rentpricedescription) {
+    public void setRentpricedescription(String rentpricedescription) {
         this.rentpricedescription = rentpricedescription;
     }
 

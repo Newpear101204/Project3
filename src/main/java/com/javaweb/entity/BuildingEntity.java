@@ -17,7 +17,7 @@ public class BuildingEntity {
     private String managername ;
 
     @Column(name = "managerphone")
-    private String managerphonenumber ;
+    private String managerPhone ;
 
     @Column(name = "ward")
     private String ward;
@@ -157,11 +157,11 @@ public class BuildingEntity {
     public void setManagername(String managername) {
         this.managername = managername;
     }
-    public String getManagerphonenumber() {
-        return managerphonenumber;
+    public String getManagerPhone() {
+        return managerPhone;
     }
-    public void setManagerphonenumber(String managerphonenumber) {
-        this.managerphonenumber = managerphonenumber;
+    public void setManagerPhone(String managerphonenumber) {
+        this.managerPhone = managerphonenumber;
     }
 
 
