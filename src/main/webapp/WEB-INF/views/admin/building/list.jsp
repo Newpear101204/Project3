@@ -331,12 +331,9 @@
                     row += '</tr>';
                 });
                 $('#staffList tbody').html(row);
-                console.info("ok");
             },
             error : function(response){
-                console.log("fail");
-                window.location.href = "/admin/building-list?message=error";
-                console.log(response);
+                window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
             }
         });
 
@@ -365,13 +362,10 @@
             contentType : "application/json",
             dataType : "JSON",
             success : function(response){
-                console.info("ok");
-                window.location.href = "/admin/building-list";
+                window.location.href = "<c:url  value ="/admin/building-list"/>";
             },
             error : function(response){
-                console.log("fail");
-                window.location.href = "/admin/building-list?message=error";
-                console.log(response);
+                window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
             }
         });
 
@@ -386,10 +380,6 @@
         e.preventDefault();
         $('#formList').submit();
     });
-
-
-
-
 
 
 
@@ -417,11 +407,11 @@
             dataType : "JSON",
             success : function(respond){
                 console.log("OK");
-                window.location.href = "/admin/building-list";
+                window.location.href = "<c:url  value ="/admin/building-list"/>";
             },
             error : function(respond){
                 console.log("fail");
-                window.location.href = "/admin/building-list?message=error";
+                window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
                 console.log(respond);
             }
         });

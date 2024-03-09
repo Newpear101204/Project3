@@ -209,9 +209,6 @@
                                     </div>
                                 </di>
 
-
-
-
                                 <di class ="form-group">
                                     <label class ="col-xs-3">Loại tòa nhà</label>
                                     <div class = "col-xs-9">
@@ -225,7 +222,6 @@
                                         <form:input class ="form-control" path="note"/>
                                     </div>
                                 </di>
-
                                 <di class ="form-group">
                                     <label class ="col-xs-3"></label>
                                     <div class ="col-xs-9">
@@ -309,12 +305,10 @@
             contentType : "application/json",
             dataType : "JSON",
             success : function(response){
-                window.location.href = "/admin/building-list";
-                console.log("OK");
+                window.location.href = "<c:url  value ="/admin/building-list"/>";
             },
             error : function(response){
-                console.log(response);
-                window.location.href = "/admin/building-list?message=error";
+                window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
 
             }
         });

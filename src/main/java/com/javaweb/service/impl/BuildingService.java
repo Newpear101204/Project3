@@ -52,11 +52,8 @@ import java.util.List;
 
     @Override
     public ResponseDTO listStaffs(Long buildingId) {
-        // lay tat ca nhan vien len
         List<UserEntity> Allstaffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
-        // tim assginment co id cua toa nha
         List<AssignmentBuildingEntity> listasffs = assignmentBuildingRepository.findByBuildingId(buildingId);
-        // lay nhan  vien thong qua buildingId cua assignment
         List<UserEntity> staffs = new ArrayList<>();
         for (AssignmentBuildingEntity it : listasffs){
             staffs.add(userRepository.findById(it.getStaffs().getId()).get());
@@ -89,13 +86,11 @@ import java.util.List;
 
     @Override
     public void DeleteBuilding(List<Long> ids) {
-        // xoa rentarea, assignment
         for (Long it : ids){
             BuildingEntity a = buildingRepository.findById(it).get();
             rentareaRepository.deleteAllByBuildings(a);
             assignmentBuildingRepository.deleteAllByBuilding(a);
         }
-        // xoa toa nha
         buildingRepository.deleteByIdIn(ids);
     }
 
@@ -110,7 +105,6 @@ import java.util.List;
            a.setBuilding(x);
            assignmentBuildingRepository.save(a);
         }
-
     }
 
 
