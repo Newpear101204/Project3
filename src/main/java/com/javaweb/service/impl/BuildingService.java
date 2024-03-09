@@ -10,7 +10,6 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
-import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentareaRepository;
@@ -19,9 +18,9 @@ import com.javaweb.service.IBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @Transactional
  class  BuildingService implements IBuildingService {
@@ -53,38 +52,16 @@ import java.util.List;
 
     @Override
     public ResponseDTO listStaffs(Long buildingId) {
-
         // lay tat ca nhan vien len
         List<UserEntity> Allstaffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
-
         // tim assginment co id cua toa nha
-        List<AssignmentBuildingEntity> listass = assignmentBuildingRepository.findByBuildingId(buildingId);
-
+        List<AssignmentBuildingEntity> listasffs = assignmentBuildingRepository.findByBuildingId(buildingId);
         // lay nhan  vien thong qua buildingId cua assignment
         List<UserEntity> staffs = new ArrayList<>();
-        for (AssignmentBuildingEntity it : listass){
+        for (AssignmentBuildingEntity it : listasffs){
             staffs.add(userRepository.findById(it.getStaffs().getId()).get());
         }
-        //
-
-        List<StaffResponseDTO> liststaffDTO = new ArrayList<>();
-        for (UserEntity user : Allstaffs){
-            StaffResponseDTO x = new StaffResponseDTO();
-            x.setFullName(user.getFullName());
-            x.setStaffId(user.getId());
-            if (staffs.contains(user)){
-                x.setChecked("checked");
-            }
-            else {
-                x.setChecked("");
-            }
-            liststaffDTO.add(x);
-        }
-        //
-        ResponseDTO a = new ResponseDTO();
-        a.setData(liststaffDTO);
-        a.setMessage("ok");
-
+        ResponseDTO a = buildingDTOConverter.ConverterToResponseDTO(Allstaffs, listasffs,staffs);
         return a;
     }
 

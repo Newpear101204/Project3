@@ -1,11 +1,15 @@
 package com.javaweb.converter;
 
 
+import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentareaEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.enums.Districts;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.model.response.StaffResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,7 +63,6 @@ public class BuildingDTOConverter {
         String[] numberStrings = s.split(",");
         for (String numberString : numberStrings) {
             list.add(numberString);
-
         }
         return list;
     }
@@ -70,6 +73,25 @@ public class BuildingDTOConverter {
             k.add(it.getValue().toString());
         }
         return String.join(",",k);
+    }
 
+    public ResponseDTO ConverterToResponseDTO (List<UserEntity> Allstaffs , List<AssignmentBuildingEntity> listass, List<UserEntity> staffs){
+        List<StaffResponseDTO> liststaffDTO = new ArrayList<>();
+        for (UserEntity user : Allstaffs){
+            StaffResponseDTO x = new StaffResponseDTO();
+            x.setFullName(user.getFullName());
+            x.setStaffId(user.getId());
+            if (staffs.contains(user)){
+                x.setChecked("checked");
+            }
+            else {
+                x.setChecked("");
+            }
+            liststaffDTO.add(x);
+        }
+        ResponseDTO a = new ResponseDTO();
+        a.setData(liststaffDTO);
+        a.setMessage("ok");
+        return a;
     }
 }
