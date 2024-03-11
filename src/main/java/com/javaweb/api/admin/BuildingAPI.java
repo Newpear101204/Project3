@@ -26,7 +26,7 @@ public class BuildingAPI {
 
     @PostMapping
     public BuildingDTO AddOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
-        buildingService.UpdateOrAddBuilding(buildingDTO);
+        buildingService.UpdateOrAdd(buildingDTO);
         return buildingDTO;
     }
 

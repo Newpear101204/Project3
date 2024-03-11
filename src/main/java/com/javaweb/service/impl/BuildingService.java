@@ -63,7 +63,7 @@ import java.util.List;
     }
 
     @Override
-    public void UpdateOrAddBuilding(BuildingDTO buildingDTO) {
+    public void UpdateOrAdd(BuildingDTO buildingDTO) {
         BuildingEntity newBuilding = buildingDTOConverter.buildingDTOConverter(buildingDTO);
         buildingRepository.save(newBuilding);
         if(newBuilding.getId() != null){
