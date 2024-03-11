@@ -36,8 +36,12 @@ public class BuildingDTOConverter {
 
     public BuildingEntity buildingDTOConverter(BuildingDTO buildingDTO){
         BuildingEntity a = modelMapper.map(buildingDTO,BuildingEntity.class);
-        a.setType(String.join(",", buildingDTO.getTypeCode()));
-        a.setListRentarea(null);
+        if(buildingDTO.getTypeCode().size() > 1){
+            a.setType(String.join(",", buildingDTO.getTypeCode()));
+        }
+        else {
+            a.setType(buildingDTO.getTypeCode().get(0));
+        }
         return a;
     }
 
@@ -48,14 +52,18 @@ public class BuildingDTOConverter {
         return a;
     }
 
-    public List<Integer> RentareaStringToInteger(String s){
-        List<Integer> listRentarea = new ArrayList<>();
-        String[] numberStrings = s.split(",");
-        for (String numberString : numberStrings) {
-            int number = Integer.parseInt(numberString);
-            listRentarea.add(number);
+    public List<Integer> RentareaStringToInteger(String s) {
+        if(s != null && !s.equalsIgnoreCase("")){
+            List<Integer> listRentarea = new ArrayList<>();
+            String[] numberStrings = s.split(",");
+            for (String numberString : numberStrings) {
+                Integer number = Integer.parseInt(numberString);
+                listRentarea.add(number);
+            }
+            return listRentarea;
+
         }
-        return listRentarea;
+        return null;
     }
 
     public List<String> StringtypeCodeToList (String s){

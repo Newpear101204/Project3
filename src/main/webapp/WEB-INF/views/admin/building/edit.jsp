@@ -307,9 +307,10 @@
             success : function(response){
                 window.location.href = "<c:url  value ="/admin/building-list"/>";
             },
-            error : function(response){
+            error : function(xhr, status, error){
+                console.info("Error:", error);
+                console.info("Response:", response);
                 window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
-
             }
         });
     };

@@ -70,11 +70,13 @@ import java.util.List;
           rentareaRepository.deleteAllByBuildings(newBuilding);
         }
         List<Integer> listRentarea = buildingDTOConverter.RentareaStringToInteger(buildingDTO.getRentArea());
-        for (Integer it : listRentarea){
-            RentareaEntity x = new RentareaEntity();
-            x.setBuilding(newBuilding);
-            x.setValue(it);
-            rentareaRepository.save(x);
+        if (listRentarea != null){
+            for (Integer it : listRentarea){
+                RentareaEntity x = new RentareaEntity();
+                x.setBuilding(newBuilding);
+                x.setValue(it);
+                rentareaRepository.save(x);
+            }
         }
     }
 

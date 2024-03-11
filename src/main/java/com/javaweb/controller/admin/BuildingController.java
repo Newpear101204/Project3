@@ -11,18 +11,15 @@ import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller(value="buildingControllerOfAdmin")
+@RestController(value="buildingControllerOfAdmin")
 public class BuildingController {
     @Autowired
     private IBuildingService iBuildingService;
@@ -38,13 +35,10 @@ public class BuildingController {
         mav.addObject("modelSearch",buildingSearchRequest);
         // xuong DB lay len
         List<BuildingSearchResponse> list= iBuildingService.findAll(buildingSearchRequest);
-
-
         mav.addObject("buildingList",list);
         mav.addObject("ListStaffs",userService.getStaffs());
         mav.addObject("districts", Districts.type());
         mav.addObject("listType", TypeCode.typecode());
-
         return mav;
     }
 
