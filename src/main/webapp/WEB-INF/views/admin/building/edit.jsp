@@ -305,7 +305,7 @@
             contentType : "application/json",
             dataType : "JSON",
             success : function(response){
-                window.location.href = "<c:url  value ="/admin/building-list"/>";
+                window.location.href = "<c:url  value ="/admin/building-list?message=success"/>";
             },
             error : function(xhr, status, error){
                 window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";

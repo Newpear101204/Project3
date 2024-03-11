@@ -47,6 +47,7 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("admin/building/edit");
         mav.addObject("districts", Districts.type());
         mav.addObject("listType", TypeCode.typecode());
+        mav.addObject("buildingEdit",buildingDTO);
         return mav;
     }
 

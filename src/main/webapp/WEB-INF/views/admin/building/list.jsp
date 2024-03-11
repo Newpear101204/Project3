@@ -357,7 +357,7 @@
             contentType : "application/json",
             dataType : "JSON",
             success : function(response){
-                window.location.href = "<c:url  value ="/admin/building-list"/>";
+                window.location.href = "<c:url  value ="/admin/building-list?message=success"/>";
             },
             error : function(response){
                 window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
@@ -399,9 +399,9 @@
             url : "/admin/building/" + data,
             data : JSON.stringify(data),
             contentType : "application/json",
-            dataType : "JSON",
+         //   dataType : "JSON",
             success : function(respond){
-                window.location.href = "<c:url  value ="/admin/building-list"/>";
+                window.location.href = "<c:url  value ="/admin/building-list?message=success"/>";
             },
             error : function(respond){
                 window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
