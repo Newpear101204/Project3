@@ -19,9 +19,6 @@ public class BuildingAPI {
     @Autowired
     private IBuildingService buildingService;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
 
     @PostMapping
     public void AddOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
@@ -42,5 +39,6 @@ public class BuildingAPI {
     @PostMapping("/assignment")
     public void updateAssignmentBuilding (@RequestBody AssignmentBuildingDTO assignmentBuildingDTO){
         buildingService.UpdateAssignmentBuilding(assignmentBuildingDTO);
+
     }
 }
