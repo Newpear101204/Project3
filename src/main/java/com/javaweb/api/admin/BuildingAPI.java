@@ -30,12 +30,10 @@ public class BuildingAPI {
         return buildingDTO;
     }
 
-
     @DeleteMapping("/{ids}")
     public void DeleteBuiling(@PathVariable List<Long> ids ){
         buildingService.DeleteBuilding(ids);
     }
-
 
     @GetMapping("/{id}/staffs")
     public ResponseDTO loadStaffs (@PathVariable Long id ){
@@ -47,6 +45,5 @@ public class BuildingAPI {
     public AssignmentBuildingDTO updateAssignmentBuilding (@RequestBody AssignmentBuildingDTO assignmentBuildingDTO){
         buildingService.UpdateAssignmentBuilding(assignmentBuildingDTO);
         return assignmentBuildingDTO;
-
     }
 }
