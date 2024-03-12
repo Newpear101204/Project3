@@ -10,6 +10,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentareaRepository;
@@ -52,32 +53,26 @@ import java.util.List;
 
     @Override
     public ResponseDTO listStaffs(Long buildingId) {
-        List<UserEntity> Allstaffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
+       /* List<UserEntity> Allstaffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
         List<AssignmentBuildingEntity> listasffs = assignmentBuildingRepository.findByBuildingId(buildingId);
         List<UserEntity> staffs = new ArrayList<>();
         for (AssignmentBuildingEntity it : listasffs){
             staffs.add(userRepository.findById(it.getStaffs().getId()).get());
         }
         ResponseDTO a = buildingDTOConverter.ConverterToResponseDTO(Allstaffs, listasffs,staffs);
-        return a;
+        return a;*/
+       BuildingEntity buildingEntity = buildingRepository.findById(buildingId).get();
+       List<UserEntity> staffs  = userRepository.findByStatusAndRoles_Code(1,"STAFF");
+       List<UserEntity> staffAssignment = buildingEntity.getUsers();
+       ResponseDTO a = buildingDTOConverter.ConverterToResponseDTO(staffs,staffAssignment);
+       return a;
+
     }
 
     @Override
     public void UpdateOrAdd(BuildingDTO buildingDTO) {
         BuildingEntity newBuilding = buildingDTOConverter.buildingDTOConverter(buildingDTO);
         buildingRepository.save(newBuilding);
-        if(newBuilding.getId() != null){
-          rentareaRepository.deleteAllByBuildings(newBuilding);
-        }
-        List<Integer> listRentarea = buildingDTOConverter.RentareaStringToInteger(buildingDTO.getRentArea());
-        if (listRentarea != null){
-            for (Integer it : listRentarea){
-                RentareaEntity x = new RentareaEntity();
-                x.setBuilding(newBuilding);
-                x.setValue(it);
-                rentareaRepository.save(x);
-            }
-        }
     }
 
     @Override
@@ -90,8 +85,7 @@ import java.util.List;
     public void DeleteBuilding(List<Long> ids) {
         for (Long it : ids){
             BuildingEntity a = buildingRepository.findById(it).get();
-            rentareaRepository.deleteAllByBuildings(a);
-            assignmentBuildingRepository.deleteAllByBuilding(a);
+            /*assignmentBuildingRepository.deleteAllByBuilding(a);*/
         }
         buildingRepository.deleteByIdIn(ids);
     }
@@ -99,14 +93,11 @@ import java.util.List;
     @Override
     public void UpdateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
         BuildingEntity x = buildingRepository.findById(assignmentBuildingDTO.getBuildingId()).get();
-        assignmentBuildingRepository.deleteAllByBuilding(x);
-        List<Long> listStaffs = assignmentBuildingDTO.getStaffs();
-        for (Long it : listStaffs){
-           AssignmentBuildingEntity a = new AssignmentBuildingEntity();
-           a.setStaffs(userRepository.findById(it).get());
-           a.setBuilding(x);
-           assignmentBuildingRepository.save(a);
+        List<UserEntity> listusers = new ArrayList<>();
+        for (Long it : assignmentBuildingDTO.getStaffs()){
+            listusers.add( userRepository.findById(it).get());
         }
+        x.setUsers(listusers);
     }
 
 

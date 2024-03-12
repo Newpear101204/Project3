@@ -13,6 +13,7 @@ import com.javaweb.model.response.StaffResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,17 @@ public class BuildingDTOConverter {
         else {
             a.setType(buildingDTO.getTypeCode().get(0));
         }
+        List<Integer> listValueRentarea = RentareaStringToInteger(buildingDTO.getRentArea());
+        List<RentareaEntity> listrentarea = new ArrayList<>();
+        if (listValueRentarea != null){
+            for (Integer it : listValueRentarea){
+                RentareaEntity x = new RentareaEntity();
+                x.setBuilding(a);
+                x.setValue(it);
+                listrentarea.add(x);
+            }
+         }
+        a.setListRentarea(listrentarea);
         return a;
     }
 
@@ -83,23 +95,23 @@ public class BuildingDTOConverter {
         return String.join(",",k);
     }
 
-    public ResponseDTO ConverterToResponseDTO (List<UserEntity> Allstaffs , List<AssignmentBuildingEntity> listass, List<UserEntity> staffs){
-        List<StaffResponseDTO> liststaffDTO = new ArrayList<>();
-        for (UserEntity user : Allstaffs){
-            StaffResponseDTO x = new StaffResponseDTO();
-            x.setFullName(user.getFullName());
-            x.setStaffId(user.getId());
-            if (staffs.contains(user)){
-                x.setChecked("checked");
-            }
-            else {
-                x.setChecked("");
-            }
-            liststaffDTO.add(x);
-        }
+    public ResponseDTO ConverterToResponseDTO (List<UserEntity> staffs ,List<UserEntity> staffAssignment){
+        List<StaffResponseDTO>  staffResponseDTOS = new ArrayList<>();
         ResponseDTO a = new ResponseDTO();
-        a.setData(liststaffDTO);
-        a.setMessage("ok");
+        for (UserEntity it : staffs){
+            StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
+            staffResponseDTO.setFullName(it.getFullName());
+            staffResponseDTO.setStaffId(it.getId());
+            if(staffAssignment.contains(it)){
+                staffResponseDTO.setChecked("checked");
+            }
+            else{
+                staffResponseDTO.setChecked("");
+            }
+            staffResponseDTOS.add(staffResponseDTO);
+        }
+        a.setData(staffResponseDTOS);
+        a.setMessage("success");
         return a;
     }
 }

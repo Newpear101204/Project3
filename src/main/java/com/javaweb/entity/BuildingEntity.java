@@ -1,5 +1,7 @@
 package com.javaweb.entity;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="building")
+@Transactional
 
 public class BuildingEntity {
 
@@ -89,11 +92,26 @@ public class BuildingEntity {
     private String decorationTime;
 
 
-    @OneToMany(mappedBy ="buildings", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy ="buildings" , fetch = FetchType.LAZY , cascade =  CascadeType.ALL , orphanRemoval =  true)
     private List<RentareaEntity> listRentarea = new ArrayList();
 
-    @OneToMany(mappedBy="building", fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+   /* @OneToMany(mappedBy="building", fetch = FetchType.LAZY)
+    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();*/
+
+    @ManyToMany(fetch =  FetchType.LAZY)
+    @JoinTable(name = "assignmentbuilding",
+            joinColumns = @JoinColumn(name = "buildingid" , nullable = false),
+            inverseJoinColumns =  @JoinColumn(name ="staffid", nullable= false))
+    private List<UserEntity> users = new ArrayList<>();
+
+    public List<UserEntity> getUsers() {
+        return users;
+    }
+
+
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
+    }
 
     public String getDirection() {
         return direction;
@@ -212,13 +230,13 @@ public class BuildingEntity {
     private List<RentareaEntity> listRentarea = new ArrayList(); */
 
 
-    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+  /*  public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
         return assignmentBuildingEntities;
     }
 
     public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
         this.assignmentBuildingEntities = assignmentBuildingEntities;
-    }
+    }*/
 
     public String getCarFee() {
         return carFee;
@@ -323,4 +341,6 @@ public class BuildingEntity {
     public void setDecorationTime(String decorationTime) {
         this.decorationTime = decorationTime;
     }
+
+
 }
