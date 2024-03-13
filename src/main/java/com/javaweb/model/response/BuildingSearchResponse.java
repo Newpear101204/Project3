@@ -18,6 +18,7 @@ public class BuildingSearchResponse extends AbstractDTO {
     private String serviceFee;
     private Double brokerageFee;
 
+
 	public Long getId() {
 		return id;
 	}

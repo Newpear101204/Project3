@@ -91,6 +91,9 @@ public class BuildingEntity {
     @Column(name ="decorationtime")
     private String decorationTime;
 
+    @Column(name ="avatar")
+    private String image;
+
 
     @OneToMany(mappedBy ="buildings" , fetch = FetchType.LAZY , cascade =  CascadeType.ALL , orphanRemoval =  true)
     private List<RentareaEntity> listRentarea = new ArrayList();
@@ -224,10 +227,7 @@ public class BuildingEntity {
     public void setListRentarea(List<RentareaEntity> listRentarea) {
         this.listRentarea = listRentarea;
     }
-    /*
 
-    @OneToMany(mappedBy ="building", fetch = FetchType.LAZY)
-    private List<RentareaEntity> listRentarea = new ArrayList(); */
 
 
   /*  public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
@@ -342,5 +342,11 @@ public class BuildingEntity {
         this.decorationTime = decorationTime;
     }
 
+    public String getImage() {
+        return image;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

@@ -1,7 +1,6 @@
 package com.javaweb.converter;
 
 
-import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentareaEntity;
 import com.javaweb.entity.UserEntity;
@@ -13,12 +12,12 @@ import com.javaweb.model.response.StaffResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+
 @Component
 public class BuildingDTOConverter {
     @Autowired
@@ -59,6 +58,7 @@ public class BuildingDTOConverter {
 
     public BuildingDTO buildingEntityConverter( BuildingEntity buildingEntity){
         BuildingDTO a = modelMapper.map(buildingEntity,BuildingDTO.class);
+        a.setImage(buildingEntity.getImage());
         a.setRentArea(RentareaToString(buildingEntity.getListRentarea()));
         a.setTypeCode(StringtypeCodeToList(buildingEntity.getType()));
         return a;
