@@ -42,7 +42,7 @@ public class BuildingController {
         List<BuildingSearchResponse> list= iBuildingService.findAll(buildingSearchRequest , PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
         BuildingSearchRequest a = new BuildingSearchRequest();
         a.setListResult(list);
-        a.setTotalItems(buildingRepository.CountBuilding(buildingSearchRequest,PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems())));
+        a.setTotalItems(list.size());
         mav.addObject("buildingList",a);
         mav.addObject("ListStaffs",userService.getStaffs());
         mav.addObject("districts", Districts.type());

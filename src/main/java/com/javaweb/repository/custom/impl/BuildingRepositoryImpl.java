@@ -109,8 +109,5 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         List<BuildingEntity> arr = quey.getResultList();
         return quey.getResultList();
     }
-    @Override
-    public int CountBuilding (BuildingSearchRequest buildingSearchRequest , Pageable pageable){
-        return findBuilding(buildingSearchRequest,pageable).size();
-    }
+   
 }

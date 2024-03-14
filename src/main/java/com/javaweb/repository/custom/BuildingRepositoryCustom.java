@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface BuildingRepositoryCustom {
     List<BuildingEntity> findBuilding (BuildingSearchRequest buildingSearchRequest , Pageable pageable);
-    int CountBuilding (BuildingSearchRequest buildingSearchRequest,Pageable pageable);
 }
