@@ -216,6 +216,24 @@
                                     </div>
                                 </di>
 
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 no-padding-right">Hình đại diện</label>
+                                    <input class="col-sm-3 no-padding-right"  type="file" id="uploadImage" />
+                                    <div class="col-sm-9">
+                                        <c:if test="${not empty buildingEdit.image}">
+                                            <c:set var="imagePath" value="/repository${buildingEdit.image}"/>
+                                            <img src="${imagePath}" id="viewImage" width="300px" height="300px" style="margin-top: 50px">
+                                        </c:if>
+                                        <c:if test="${empty buildingEdit.image}">
+                                            <img src="/admin/image/default.png" id="viewImage" width="300px" height="300px">
+                                        </c:if>
+                                    </div>
+                                </div>
+
+
+
+
                                 <di class ="form-group">
                                     <label class ="col-xs-3">Ghi chú</label>
                                     <div class = "col-xs-9">
@@ -227,20 +245,22 @@
                                     <div class ="col-xs-9">
 
                                         <c:if test="${not empty buildingEdit.id}">
-                                            <button type ="button" class =" btn btn-infor" id ="btnAddOrUpdateBuilding" title="Cập nhật tòa nhà">
+                                            <button type ="button" class =" btn btn-infor" value="${valueBtn}" id ="btnAddOrUpdateBuilding" title="Cập nhật tòa nhà">
                                                 Cập nhật tòa nhà
                                             </button>
                                             <button  type ="button" class =" btn btn-infor" id ="btnCancel" title ="Hủy thao tác">
                                                 Hủy thao tác
                                             </button>
+                                            <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
                                         </c:if>
                                         <c:if test="${empty buildingEdit.id}">
-                                            <button type ="button" class =" btn btn-infor" id ="btnAddOrUpdateBuilding" title="Thêm tòa nhà">
+                                            <button type ="button" class =" btn btn-infor"  id ="btnAddOrUpdateBuilding" title="Thêm tòa nhà">
                                                 Thêm tòa nhà
                                             </button>
                                             <button  type ="button" class =" btn btn-infor" id ="btnCancel" title ="Hủy thao tác">
                                                 Hủy thao tác
                                             </button>
+                                            <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
                                         </c:if>
 
                                     </div>
@@ -271,21 +291,34 @@
 
 
 <script>
+    var imageBase64 = '';
+    var imageName = '';
     $('#btnAddOrUpdateBuilding').click(function(){
         var data ={};
         var typeCode =[];
         var formdata = $('#listForm').serializeArray();
         $.each(formdata, function(i,v){
-            if(v.name != 'typeCode'){
-                data["" + v.name +""] = v.value;
+            if('' !== v.value && null != v.value){
+                if (v.name != 'typeCode'){
+                    data["" + v.name +""] = v.value;
+                }
+                else {
+                    typeCode.push(v.value);
+                }
             }
-            else {
-                typeCode.push(v.value);
+            if ('' !== imageBase64) {
+                data['imageBase64'] = imageBase64;
+                data['imageName'] = imageName;
             }
+
+
         });
         data['typeCode'] =typeCode;
+
         if(typeCode != ""){
-           AddOrUpdate(data);
+            $('#loading_image').show();
+            AddOrUpdate(data);
+
         }
         else {
             window.location.href = "/admin/building-edit?typeCode=require";
@@ -305,9 +338,11 @@
             contentType : "application/json",
             dataType : "JSON",
             success : function(response){
+                $('#loading_image').hide();
                 window.location.href = "<c:url  value ="/admin/building-list?message=success"/>";
             },
-            error : function(xhr, status, error){
+            error : function(response){
+                $('#loading_image').hide();
                 window.location.href = "<c:url  value ="/admin/building-list?message=error"/>";
             }
         });
@@ -316,6 +351,33 @@
     $('#btnCancel').click(function (){
         window.location.href ="admin/building-list";
     });
+
+
+
+    $('#uploadImage').change(function (event) {
+        var reader = new FileReader();
+        var file = $(this)[0].files[0];
+        reader.onload = function(e){
+            imageBase64 = e.target.result;
+            imageName = file.name; // ten hinh khong dau, khoang cach. vd: a-b-c
+        };
+        reader.readAsDataURL(file);
+        openImage(this, "viewImage");
+    });
+
+    function openImage(input, imageView) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#' +imageView).attr('src', reader.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+
+
 </script>
 
 </body>

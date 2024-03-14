@@ -15,9 +15,13 @@ import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentareaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IBuildingService;
+import com.javaweb.utils.UploadFileUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +42,9 @@ import java.util.List;
 
     @Autowired
     private RentareaRepository rentareaRepository;
+
+    @Autowired
+    private UploadFileUtils uploadFileUtils;
 
     @Override
     public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
@@ -65,10 +72,14 @@ import java.util.List;
     @Override
     public void UpdateOrAdd(BuildingDTO buildingDTO) {
         BuildingEntity newBuilding = buildingDTOConverter.buildingDTOConverter(buildingDTO);
-        buildingRepository.save(newBuilding);
         if(newBuilding.getId() != null){
           rentareaRepository.deleteAllByBuildings(newBuilding);
+          if(newBuilding.getImage() == null){
+              newBuilding.setImage(buildingRepository.findById(newBuilding.getId()).get().getImage());
+          }
         }
+        saveThumbnail(buildingDTO, newBuilding);
+        buildingRepository.save(newBuilding);
         List<Integer> listRentarea = buildingDTOConverter.RentareaStringToInteger(buildingDTO.getRentArea());
         if (listRentarea != null){
             for (Integer it : listRentarea){
@@ -108,6 +119,22 @@ import java.util.List;
            assignmentBuildingRepository.save(a);
         }
     }
+
+    private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
+        String path = "/building/" + buildingDTO.getImageName();
+        if (null != buildingDTO.getImageBase64()) {
+            if (null != buildingEntity.getImage()) {
+                if (!path.equals(buildingEntity.getImage())) {
+                    File file = new File("C://home/office" + buildingEntity.getImage());
+                    file.delete();
+                }
+            }
+            byte[] bytes = Base64.decodeBase64(buildingDTO.getImageBase64().getBytes());
+            uploadFileUtils.writeOrUpdate(path, bytes);
+            buildingEntity.setImage(path);
+        }
+    }
+
 
 
 }

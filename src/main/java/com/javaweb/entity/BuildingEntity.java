@@ -88,6 +88,16 @@ public class BuildingEntity {
     @Column(name ="decorationtime")
     private String decorationTime;
 
+    @Column(name ="avatar")
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @OneToMany(mappedBy ="buildings", fetch = FetchType.LAZY)
     private List<RentareaEntity> listRentarea = new ArrayList();
