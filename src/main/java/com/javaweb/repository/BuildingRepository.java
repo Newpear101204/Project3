@@ -12,4 +12,5 @@ public interface BuildingRepository extends JpaRepository<BuildingEntity, Long>,
     List<BuildingEntity> findByNumberOfBasement(Integer x);
 
 
+
 }

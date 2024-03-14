@@ -14,6 +14,7 @@ import com.javaweb.service.IBuildingService;
 import com.javaweb.utils.UploadFileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +39,8 @@ import java.util.List;
 
 
     @Override
-    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
-        List<BuildingEntity> list = buildingRepository.findBuilding(buildingSearchRequest);
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest , Pageable pageable) {
+        List<BuildingEntity> list = buildingRepository.findBuilding(buildingSearchRequest, pageable);
         List<BuildingSearchResponse> listResponse = new ArrayList<>();
         for(BuildingEntity item : list){
             BuildingSearchResponse a = buildingDTOConverter.EntityConverter(item);
@@ -61,6 +62,9 @@ import java.util.List;
     @Override
     public void UpdateOrAdd(BuildingDTO buildingDTO) {
         BuildingEntity newBuilding = buildingDTOConverter.buildingDTOConverter(buildingDTO);
+        if(newBuilding.getId() != null && newBuilding.getImage() == null){
+            newBuilding.setImage(buildingRepository.findById(newBuilding.getId()).get().getImage());
+        }
         saveThumbnail(buildingDTO, newBuilding);
         buildingRepository.save(newBuilding);
     }

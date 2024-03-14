@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -189,7 +190,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <table id="tableList" style ="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover">
+                        <%--<table id="tableList" style ="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th class="center">
@@ -259,7 +260,57 @@
                                 </tr>
                             </c:forEach>
                             </tbody>
-                        </table>
+
+                        </table>--%>
+                            <display:table  name ="buildingList.listResult"
+                                            cellspacing="0" cellpadding="0"
+                                            requestURI="building-list" partialList="true" sort="external"
+                                            size="${buildingList.totalItems}" defaultsort="2" defaultorder="ascending"
+                                            id="tableList" pagesize="${buildingList.maxPageItems}"
+                                            export="false"
+                                            style ="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover">
+                                <display:column class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace" name = "checkList" value ="${tableList.id}">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </display:column>
+                                <display:column  property="name" title="Tên tòa nhà"/>
+                                <display:column  property="address" title="Địa chỉ"/>
+                                <display:column  property="numberOfBasement" title="Số tầng hầm "/>
+                                <display:column  property="managerName" title="Tên quản lí"/>
+                                <display:column  property="managerPhone" title="SDT quản lí"/>
+                                <display:column  property="floorArea" title="D.Tích sàn"/>
+                                <display:column  property="emptyArea" title="D.Tích trống"/>
+                                <display:column  property="rentArea" title="D.Tích thuê"/>
+                                <display:column  property="brokerageFee" title="Phí môi giới"/>
+                                <display:column title="Thao tac">
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-success" title ="Giao tòa nhà " onclick ="assignmentBuilding(${tableList.id})">
+                                            <i class="ace-icon fa fa-check bigger-120"></i>
+                                        </button>
+
+                                        <a href ="/admin/building-edit-${tableList.id}">
+                                            <button class="btn btn-xs btn-info" title ="Sửa tòa nhà">
+                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                            </button>
+
+                                        </a>
+
+                                        <button class="btn btn-xs btn-danger" title ="Xoa  tòa nhà" onclick = deleteBuilding(${tableList.id})>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                            </svg>
+                                        </button>
+
+
+
+                                    </div>
+
+                                </display:column>
+
+
+                            </display:table>
                     </div><!-- /.span -->
                 </div>
 

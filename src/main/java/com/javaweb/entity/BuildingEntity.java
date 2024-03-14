@@ -101,7 +101,7 @@ public class BuildingEntity {
    /* @OneToMany(mappedBy="building", fetch = FetchType.LAZY)
     private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();*/
 
-    @ManyToMany(fetch =  FetchType.LAZY)
+    @ManyToMany(fetch =  FetchType.LAZY )
     @JoinTable(name = "assignmentbuilding",
             joinColumns = @JoinColumn(name = "buildingid" , nullable = false),
             inverseJoinColumns =  @JoinColumn(name ="staffid", nullable= false))
