@@ -18,6 +18,7 @@ import com.javaweb.service.IBuildingService;
 import com.javaweb.utils.UploadFileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,8 +48,8 @@ import java.util.List;
     private UploadFileUtils uploadFileUtils;
 
     @Override
-    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
-        List<BuildingEntity> list = buildingRepository.findBuilding(buildingSearchRequest);
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest , Pageable pageable) {
+        List<BuildingEntity> list = buildingRepository.findBuilding(buildingSearchRequest, pageable);
         List<BuildingSearchResponse> listResponse = new ArrayList<>();
         for(BuildingEntity item : list){
             BuildingSearchResponse a = buildingDTOConverter.EntityConverter(item);

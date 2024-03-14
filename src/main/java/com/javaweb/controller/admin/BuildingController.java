@@ -8,10 +8,12 @@ import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.repository.BuildingRepository;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +29,9 @@ public class BuildingController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private BuildingRepository buildingRepository;
+
 
 
     @RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)
@@ -34,8 +39,11 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
         // xuong DB lay len
-        List<BuildingSearchResponse> list= iBuildingService.findAll(buildingSearchRequest);
-        mav.addObject("buildingList",list);
+        List<BuildingSearchResponse> list= iBuildingService.findAll(buildingSearchRequest , PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
+        BuildingSearchRequest a = new BuildingSearchRequest();
+        a.setListResult(list);
+        a.setTotalItems(buildingRepository.CountBuilding(buildingSearchRequest,PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems())));
+        mav.addObject("buildingList",a);
         mav.addObject("ListStaffs",userService.getStaffs());
         mav.addObject("districts", Districts.type());
         mav.addObject("listType", TypeCode.typecode());
