@@ -37,7 +37,6 @@ public class BuildingDTOConverter {
 
     public BuildingEntity buildingDTOConverter(BuildingDTO buildingDTO){
         BuildingEntity a = modelMapper.map(buildingDTO,BuildingEntity.class);
-        a.setImage(buildingDTO.getImage());
         if(buildingDTO.getTypeCode().size() > 1){
             a.setType(String.join(",", buildingDTO.getTypeCode()));
         }
@@ -49,7 +48,6 @@ public class BuildingDTOConverter {
 
     public BuildingDTO buildingEntityConverter( BuildingEntity buildingEntity){
         BuildingDTO a = modelMapper.map(buildingEntity,BuildingDTO.class);
-        a.setImage(buildingEntity.getImage());
         a.setRentArea(RentareaToString(buildingEntity.getListRentarea()));
         a.setTypeCode(StringtypeCodeToList(buildingEntity.getType()));
         return a;
