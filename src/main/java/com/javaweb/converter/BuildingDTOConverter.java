@@ -58,7 +58,6 @@ public class BuildingDTOConverter {
 
     public BuildingDTO buildingEntityConverter( BuildingEntity buildingEntity){
         BuildingDTO a = modelMapper.map(buildingEntity,BuildingDTO.class);
-        a.setImage(buildingEntity.getImage());
         a.setRentArea(RentareaToString(buildingEntity.getListRentarea()));
         a.setTypeCode(StringtypeCodeToList(buildingEntity.getType()));
         return a;
