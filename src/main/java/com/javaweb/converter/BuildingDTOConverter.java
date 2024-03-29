@@ -28,7 +28,11 @@ public class BuildingDTOConverter {
         String rentareaSt = rentarea.stream().map(it -> it.getValue().toString()).collect(Collectors.joining(","));
         Map<String,String> districtsList = Districts.type();
         String dis = districtsList.get(item.getDistrict());
-        String adress = item.getStreet() + "," + item.getWard() +"," + dis;
+        String districtName ="";
+        if(dis != null && !dis.equalsIgnoreCase("")){
+            districtName = dis;
+        }
+        String adress = item.getStreet() + "," + item.getWard() +"," + districtName;
         BuildingSearchResponse a = modelMapper.map(item,BuildingSearchResponse.class);
         a.setAddress(adress);
         a.setRentArea(rentareaSt);

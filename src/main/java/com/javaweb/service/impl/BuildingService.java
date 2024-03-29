@@ -100,11 +100,8 @@ import java.util.List;
 
     @Override
     public void DeleteBuilding(List<Long> ids) {
-        for (Long it : ids){
-            BuildingEntity a = buildingRepository.findById(it).get();
-            rentareaRepository.deleteAllByBuildings(a);
-            assignmentBuildingRepository.deleteAllByBuilding(a);
-        }
+        rentareaRepository.deleteByBuildingsIdIn(ids);
+        assignmentBuildingRepository.deleteByBuildingIdIn(ids);
         buildingRepository.deleteByIdIn(ids);
     }
 
