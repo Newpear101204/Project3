@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name ="building")
 @Transactional
 
-public class BuildingEntity {
+public class BuildingEntity extends BaseEntity{
 
     @Column(name = "name")
     private String name;

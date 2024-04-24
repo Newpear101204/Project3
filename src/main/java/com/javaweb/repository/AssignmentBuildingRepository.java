@@ -10,5 +10,5 @@ import java.util.List;
 public interface AssignmentBuildingRepository extends JpaRepository<AssignmentBuildingEntity, Long> {
     List<AssignmentBuildingEntity> findByBuildingId (Long buildingId);
     void deleteAllByBuilding (BuildingEntity buildingEntity);
-  //  void saveByStaffsAndBuilding(UserEntity userEntity, BuildingEntity buildingEntity );
+
 }

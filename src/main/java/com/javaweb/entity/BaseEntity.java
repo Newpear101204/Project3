@@ -65,7 +65,7 @@ public class BaseEntity implements Serializable {
     }
 
     public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+            this.modifiedDate = modifiedDate;
     }
 
     public String getModifiedBy() {
@@ -73,6 +73,6 @@ public class BaseEntity implements Serializable {
     }
 
     public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
+            this.modifiedBy = modifiedBy;
     }
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "assignmentbuilding")
-public class AssignmentBuildingEntity {
+public class AssignmentBuildingEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

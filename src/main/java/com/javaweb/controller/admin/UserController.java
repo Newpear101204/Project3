@@ -1,7 +1,10 @@
 package com.javaweb.controller.admin;
 
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.dto.UserDTO;
+import com.javaweb.model.request.BuildingSearchRequest;
+import com.javaweb.model.request.CustomerSearchRequest;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.IUserService;
 import com.javaweb.service.impl.RoleService;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -89,4 +93,6 @@ public class UserController {
 			mav.addObject(SystemConstant.MESSAGE_RESPONSE, messageMap.get(SystemConstant.MESSAGE_RESPONSE));
 		}
 	}
+
+
 }

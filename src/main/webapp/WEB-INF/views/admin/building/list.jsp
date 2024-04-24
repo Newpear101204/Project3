@@ -1,6 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
+<%@ taglib prefix="secutity" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -127,12 +129,14 @@
                                                         <form:input class ="form-control" path="managerPhone"/>
                                                     </div>
                                                     <div class ="col-xs-2">
+                                                        <secutity:authorize access="hasRole('MANAGER')" >
                                                         <label class ="name">Nhân viên </label>
                                                         
                                                         <form:select class ="form-control" path="staffId" >
                                                             <form:option value="">--- Chọn nhân viên</form:option>
                                                             <form:options  items="${ListStaffs}"/>
                                                         </form:select>
+                                                        </secutity:authorize>
                                                     </div>
                                                 </div>
                                             </div>
@@ -286,9 +290,12 @@
                                 <display:column  property="brokerageFee" title="Phí môi giới"/>
                                 <display:column title="Thao tac">
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" title ="Giao tòa nhà " onclick ="assignmentBuilding(${tableList.id})">
-                                            <i class="ace-icon fa fa-check bigger-120"></i>
-                                        </button>
+                                        <security:authorize access="hasRole('MANAGER')">
+                                            <button class="btn btn-xs btn-success" title ="Giao tòa nhà " onclick ="assignmentBuilding(${tableList.id})">
+                                                <i class="ace-icon fa fa-check bigger-120"></i>
+                                            </button>
+                                        </security:authorize>
+
 
                                         <a href ="/admin/building-edit-${tableList.id}">
                                             <button class="btn btn-xs btn-info" title ="Sửa tòa nhà">
@@ -297,11 +304,15 @@
 
                                         </a>
 
-                                        <button class="btn btn-xs btn-danger" title ="Xoa  tòa nhà" onclick = deleteBuilding(${tableList.id})>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                            </svg>
-                                        </button>
+                                        <security:authorize access="hasRole('MANAGER')">
+                                            <button class="btn btn-xs btn-danger" title ="Xoa  tòa nhà" onclick = deleteBuilding(${tableList.id})>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                                </svg>
+                                            </button>
+                                        </security:authorize>
+
+
 
 
 

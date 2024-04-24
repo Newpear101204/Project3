@@ -12,11 +12,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name ="rentarea")
-public class RentareaEntity {
+public class RentareaEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name ="value")
     private Integer value;
@@ -25,11 +25,11 @@ public class RentareaEntity {
     @JoinColumn(name = "buildingid")
     private BuildingEntity buildings;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

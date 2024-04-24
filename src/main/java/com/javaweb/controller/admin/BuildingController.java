@@ -9,6 +9,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.repository.BuildingRepository;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,9 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch",buildingSearchRequest);
         // xuong DB lay len
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            buildingSearchRequest.setStaffId(SecurityUtils.getPrincipal().getId());
+        }
         List<BuildingSearchResponse> list= iBuildingService.findAll(buildingSearchRequest , PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
         BuildingSearchRequest a = new BuildingSearchRequest();
         a.setListResult(list);
