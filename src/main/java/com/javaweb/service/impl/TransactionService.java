@@ -20,20 +20,15 @@ public class TransactionService implements ITransactionService {
     @Override
     public List<TransactionEntity> getTransaction(CustomerEntity customerEntity, String code) {
         List<TransactionEntity> list = transactionRepository.findByCustomersAndCode(customerEntity,code);
-
         return list;
     }
 
-    @Override
-    public TransactionEntity getTransactionToUpdate (Long id){
-        return transactionRepository.findById(id).get();
-    }
 
     @Override
     public void AddTransaction(TransactionDTO transactionDTO) {
-        TransactionEntity transactionEntity = new TransactionEntity();
+        TransactionEntity transactionEntity ;
         if(transactionDTO.getId() != null){
-            transactionEntity = getTransactionToUpdate(transactionDTO.getId());
+            transactionEntity = transactionRepository.findById(transactionDTO.getId()).get();
             transactionEntity.setNote(transactionDTO.getTransactionDetail());
         }
         else {
